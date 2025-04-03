@@ -88,6 +88,26 @@ let quiz input =
         | "Ruby" -> Console.WriteLine("В себя чтоли поверил?")
         | _ -> Console.WriteLine("Может делом займешься?!")
 
+// task 13
+let rec gcd a b =
+    match b with
+        | 0 -> a
+        | _ -> gcd b (a%b)
+
+let coprimeDigits (n :int) (func: int -> int -> int) (acc :int) =
+        let rec loop cur acc =
+            match cur with
+                | 0 -> acc
+                | _ ->
+                    let digit = cur % 10
+                    let newAcc =
+                        match digit with
+                            | 0 -> acc
+                            | digit when gcd n digit = 1 -> func acc digit
+                            | _ -> acc
+                    loop (cur/10) newAcc
+        loop n acc
+
 
 [<EntryPoint>]
 let main argv =
@@ -150,10 +170,10 @@ let main argv =
         Console.WriteLine(filterReduce 12345 (fun acc digit -> if digit < acc then digit else acc) 10 (fun digit -> true))
     filterReduceTest()
 *)
-    // 11
+(*    // 11
     quiz "Ruby"
-
-    //12
+*)
+(*    //12
     let curryQuiz () =
         let input = Console.ReadLine()
         let proc = quiz input
@@ -165,6 +185,16 @@ let main argv =
     let superQuiz () =
         (Console.ReadLine >> quiz >> Console.WriteLine)()
 
-    superQuiz()
+    superQuiz()*)
+
+    //13
+    let coprimeDigitsTest () =
+        Console.WriteLine(coprimeDigits 12345 (fun acc digit -> acc + digit) 0)
+        Console.WriteLine(coprimeDigits 12345 (fun acc digit -> acc * digit) 1)
+        Console.WriteLine(coprimeDigits 12345 (fun acc digit -> if digit < acc then digit else acc) 10)
+        Console.WriteLine(coprimeDigits 12345 (fun acc digit -> if digit > acc then digit else acc) 0)
+        Console.WriteLine(coprimeDigits 12345 (fun acc digit -> acc + 1) 0)
+
+    coprimeDigitsTest()
 
     0
