@@ -80,12 +80,14 @@ let rec filterReduce (n:int) (func : int -> int -> int) (acc:int) (condition : i
             let curDigit = n / 10
             filterReduce curDigit func newacc condition
 
+// task 11
 let quiz input =
     match input with
         | "F#"|"Prolog" -> Console.WriteLine("Фуууу подлиза")
         | "Java" -> Console.WriteLine("МММ ТРЕШ")
         | "Ruby" -> Console.WriteLine("В себя чтоли поверил?")
         | _ -> Console.WriteLine("Может делом займешься?!")
+
 
 [<EntryPoint>]
 let main argv =
@@ -150,5 +152,19 @@ let main argv =
 *)
     // 11
     quiz "Ruby"
+
+    //12
+    let curryQuiz () =
+        let input = Console.ReadLine()
+        let proc = quiz input
+        let output = Console.WriteLine proc
+        output
+    
+    curryQuiz()
+
+    let superQuiz () =
+        (Console.ReadLine >> quiz >> Console.WriteLine)()
+
+    superQuiz()
 
     0
