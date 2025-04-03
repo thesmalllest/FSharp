@@ -108,10 +108,23 @@ let coprimeDigits (n :int) (func: int -> int -> int) (acc :int) =
                     loop (cur/10) newAcc
         loop n acc
 
+// task 14
+let eiler n =
+    let rec loop cur acc =
+        match cur with
+        | 0 -> acc
+        | _ ->
+            let newAcc =
+                match gcd n cur with
+                | 1 -> acc + 1
+                | _ -> acc
+            loop (cur - 1) newAcc
+    loop (n-1) 0
 
 [<EntryPoint>]
 let main argv =
-(*    //Объем цилиндра
+(*    
+    // 3
     Console.WriteLine("Введите радиус цилиндра:")
     let radius = Console.ReadLine() |> float
     Console.WriteLine("Введите высоту цилиндра:")
@@ -128,7 +141,7 @@ let main argv =
     let result = volumeFunction height
     Console.WriteLine($"Объём цилиндра: {result}")
 
-    //Сумма цифр
+    // 4-5
     Console.WriteLine("Введите число, чтобы посчитать сумму его цифр:")
     let input_for_sum = Console.ReadLine()
     let number_for_sum = int input_for_sum  
@@ -173,7 +186,7 @@ let main argv =
 (*    // 11
     quiz "Ruby"
 *)
-(*    //12
+(*    // 12
     let curryQuiz () =
         let input = Console.ReadLine()
         let proc = quiz input
@@ -187,7 +200,7 @@ let main argv =
 
     superQuiz()*)
 
-    //13
+(*    // 13
     let coprimeDigitsTest () =
         Console.WriteLine(coprimeDigits 12345 (fun acc digit -> acc + digit) 0)
         Console.WriteLine(coprimeDigits 12345 (fun acc digit -> acc * digit) 1)
@@ -195,6 +208,16 @@ let main argv =
         Console.WriteLine(coprimeDigits 12345 (fun acc digit -> if digit > acc then digit else acc) 0)
         Console.WriteLine(coprimeDigits 12345 (fun acc digit -> acc + 1) 0)
 
-    coprimeDigitsTest()
+    coprimeDigitsTest()*)
+
+    // 14
+    let eilerTest () =
+        Console.WriteLine(eiler 1)     
+        Console.WriteLine(eiler 5)    
+        Console.WriteLine(eiler 9)     
+        Console.WriteLine(eiler 10)   
+        Console.WriteLine(eiler 20)   
+
+    eilerTest()
 
     0
