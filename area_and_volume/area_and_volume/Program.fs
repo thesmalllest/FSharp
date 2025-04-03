@@ -58,7 +58,6 @@ let isTrue (b:bool) =
         | false -> sumDigitsDown 123
 
 // task 7-8
-
 let rec reduce (n:int) (func : int -> int -> int) (acc:int) =
     match n with
         | 0 -> acc
@@ -67,6 +66,19 @@ let rec reduce (n:int) (func : int -> int -> int) (acc:int) =
             let newAcc = func acc digit
             let curDigit = (n/10)
             reduce curDigit func newAcc
+
+// task 9-10
+let rec filterReduce (n:int) (func : int -> int -> int) (acc:int) (condition : int -> bool) =
+    match n with
+        | 0 -> acc
+        | _ ->
+            let digit = n%10
+            let newacc =    
+                match condition digit with
+                    | true -> func acc digit
+                    | false -> acc
+            let curDigit = n / 10
+            filterReduce curDigit func newacc condition
 
 
 
@@ -111,7 +123,7 @@ let main argv =
     let count_2 = countDevisiorsDown number_for_count
     Console.WriteLine($"Количество делителей {number_for_count}: {count_2}")
 *)  
-    // 6
+(*    // 6
     Console.WriteLine(isTrue false)
     
     // 7-8
@@ -121,6 +133,14 @@ let main argv =
         Console.WriteLine(reduce 1234 (fun acc digit -> if digit < acc then digit else acc) 10)
         Console.WriteLine(reduce 1234 (fun acc digit -> if digit > acc then digit else acc) 0)
 
-    testReduce()
+    testReduce()*)
+
+    // 9-10
+    let filterReduceTest () = 
+        Console.WriteLine(filterReduce 12345 (fun acc digit -> acc + digit) 0 (fun digit -> digit % 2 = 0))
+        Console.WriteLine(filterReduce 12345 (fun acc digit -> acc * digit) 1 (fun digit -> digit <> 1))
+        Console.WriteLine(filterReduce 12345 (fun acc digit -> acc + 1) 0 (fun digit -> digit > 3))
+        Console.WriteLine(filterReduce 12345 (fun acc digit -> if digit < acc then digit else acc) 10 (fun digit -> true))
+    filterReduceTest()
 
     0
