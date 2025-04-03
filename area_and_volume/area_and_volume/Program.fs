@@ -57,6 +57,17 @@ let isTrue (b:bool) =
         | true -> factorial 5
         | false -> sumDigitsDown 123
 
+// task 7-8
+
+let rec reduce (n:int) (func : int -> int -> int) (acc:int) =
+    match n with
+        | 0 -> acc
+        | _ ->
+            let digit = (n%10)
+            let newAcc = func acc digit
+            let curDigit = (n/10)
+            reduce curDigit func newAcc
+
 
 
 [<EntryPoint>]
@@ -102,5 +113,14 @@ let main argv =
 *)  
     // 6
     Console.WriteLine(isTrue false)
+    
+    // 7-8
+    let testReduce () =
+        Console.WriteLine(reduce 1234 (fun acc digit -> acc + digit) 0)
+        Console.WriteLine(reduce 1234 (fun acc digit -> acc * digit) 1)
+        Console.WriteLine(reduce 1234 (fun acc digit -> if digit < acc then digit else acc) 10)
+        Console.WriteLine(reduce 1234 (fun acc digit -> if digit > acc then digit else acc) 0)
+
+    testReduce()
 
     0
