@@ -80,7 +80,12 @@ let rec filterReduce (n:int) (func : int -> int -> int) (acc:int) (condition : i
             let curDigit = n / 10
             filterReduce curDigit func newacc condition
 
-
+let quiz input =
+    match input with
+        | "F#"|"Prolog" -> Console.WriteLine("Фуууу подлиза")
+        | "Java" -> Console.WriteLine("МММ ТРЕШ")
+        | "Ruby" -> Console.WriteLine("В себя чтоли поверил?")
+        | _ -> Console.WriteLine("Может делом займешься?!")
 
 [<EntryPoint>]
 let main argv =
@@ -135,12 +140,15 @@ let main argv =
 
     testReduce()*)
 
-    // 9-10
+(*    // 9-10
     let filterReduceTest () = 
         Console.WriteLine(filterReduce 12345 (fun acc digit -> acc + digit) 0 (fun digit -> digit % 2 = 0))
         Console.WriteLine(filterReduce 12345 (fun acc digit -> acc * digit) 1 (fun digit -> digit <> 1))
         Console.WriteLine(filterReduce 12345 (fun acc digit -> acc + 1) 0 (fun digit -> digit > 3))
         Console.WriteLine(filterReduce 12345 (fun acc digit -> if digit < acc then digit else acc) 10 (fun digit -> true))
     filterReduceTest()
+*)
+    // 11
+    quiz "Ruby"
 
     0
