@@ -121,6 +121,18 @@ let eiler n =
             loop (cur - 1) newAcc
     loop (n-1) 0
 
+// task 15
+let coprimeFilter (n:int) (condition: int -> bool) (func: int -> int -> int) (initial:int) =
+    let rec loop cur acc =
+        match cur with
+        | 0 -> acc
+        | _ ->
+            let digit = n % 10
+            let newAcc =
+                if gcd n digit = 1 && condition digit then func acc digit
+                else acc
+            loop (cur/10) newAcc
+    loop n initial
 [<EntryPoint>]
 let main argv =
 (*    
@@ -209,7 +221,7 @@ let main argv =
         Console.WriteLine(coprimeDigits 12345 (fun acc digit -> acc + 1) 0)
 
     coprimeDigitsTest()*)
-
+(*
     // 14
     let eilerTest () =
         Console.WriteLine(eiler 1)     
@@ -218,6 +230,16 @@ let main argv =
         Console.WriteLine(eiler 10)   
         Console.WriteLine(eiler 20)   
 
-    eilerTest()
+    eilerTest()*)
+
+    // 15
+    let coprimeFilterTest () =
+        Console.WriteLine(coprimeFilter 12345 (fun digit -> digit % 2 = 0) (fun acc digit -> digit + acc) 0)
+        Console.WriteLine(coprimeFilter 12345 (fun digit -> digit > 3) (fun acc digit -> digit * acc) 1)
+        Console.WriteLine(coprimeFilter 12345 (fun digit -> digit <> 1) (fun acc digit -> if digit < acc then digit else acc) 10)
+        Console.WriteLine(coprimeFilter 12345 (fun digit -> digit % 5 <> 0) (fun acc digit -> if digit > acc then digit else acc) 0)
+        Console.WriteLine(coprimeFilter 12345 (fun digit -> digit < 4) (fun acc digit -> acc + 1) 0)
+
+    coprimeFilterTest()
 
     0
