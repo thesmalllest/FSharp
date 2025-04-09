@@ -133,8 +133,74 @@ let coprimeFilter (n:int) (condition: int -> bool) (func: int -> int -> int) (in
                 else acc
             loop (cur/10) newAcc
     loop n initial
+
+// task 16 var 7
+
+//method 1 
+
+let isPrime n =
+    match n with
+    | n when n <= 1 -> false
+    | _ ->
+        let rec check i =
+            match i * i > n with
+            | true -> true
+            | false -> 
+                match n % i = 0 with
+                | true -> false
+                | false -> check (i + 1)
+        check 2
+
+let sumPrimeDivisors n =
+    let rec loop i acc =
+        match i > n with
+        | true -> acc
+        | false ->
+            match n % i = 0 && isPrime i with
+            | true -> loop (i + 1) (acc + i)
+            | false -> loop (i + 1) acc
+    loop 2 0
+
+//method 2
+let sumDigitsDivBy3 n =
+    let cond = fun d -> d % 3 = 0        
+    let op = fun acc d -> acc + d        
+    let rec loop num acc =
+        match num with
+        | 0 -> acc
+        | _ ->
+            let digit = num % 10
+            match cond digit with
+            | true -> loop (num / 10) (op acc digit)
+            | false -> loop (num / 10) acc
+    loop n 0
+
+//method 3
+let sumDigits n =
+    let rec loop num acc =
+        match num with
+        | 0 -> acc
+        | _ -> loop (num / 10) (acc + num % 10)
+    loop n 0
+
+let multDivSumDigLessSum n =
+    let targetSum = sumDigits n
+    let rec loop divisor acc =
+        match divisor with
+        | 0 -> acc
+        | _ ->
+            match n % divisor = 0 && sumDigitsDown divisor < targetSum with
+            | true -> loop (divisor - 1) (acc * divisor)
+            | false -> loop (divisor - 1) acc
+    match n with
+    | 0 | 1 -> 0 
+    | _ -> 
+        let result = loop n 1
+        if result = 1 then 0 else result
+
 [<EntryPoint>]
 let main argv =
+
 (*    
     // 3
     Console.WriteLine("Введите радиус цилиндра:")
@@ -232,7 +298,7 @@ let main argv =
 
     eilerTest()*)
 
-    // 15
+(*    // 15
     let coprimeFilterTest () =
         Console.WriteLine(coprimeFilter 12345 (fun digit -> digit % 2 = 0) (fun acc digit -> digit + acc) 0)
         Console.WriteLine(coprimeFilter 12345 (fun digit -> digit > 3) (fun acc digit -> digit * acc) 1)
@@ -240,6 +306,18 @@ let main argv =
         Console.WriteLine(coprimeFilter 12345 (fun digit -> digit % 5 <> 0) (fun acc digit -> if digit > acc then digit else acc) 0)
         Console.WriteLine(coprimeFilter 12345 (fun digit -> digit < 4) (fun acc digit -> acc + 1) 0)
 
-    coprimeFilterTest()
+    coprimeFilterTest()*)
+
+    // 16
+    let testMethods () =
+        let number1 = 30
+        let number2 = 123456789
+        let number3 = 12
+
+        printfn "Метод 1: Сумма простых делителей числа %d = %d" number1 (sumPrimeDivisors number1)
+        printfn "Метод 2: Сумма цифр, делящихся на 3 числа %d = %d" number2 (sumDigitsDivBy3 number2)
+        printfn "Метод 3: Произведение делителей числа %d, сумма цифр которых меньше суммы цифр числа = %d" number3 (multDivSumDigLessSum number3)
+
+    testMethods ()
 
     0
