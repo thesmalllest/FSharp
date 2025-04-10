@@ -1,4 +1,16 @@
-﻿// task 1.7
+﻿// input
+let rec readList n = 
+    if n=0 then []
+    else
+    let Head = System.Convert.ToInt32(System.Console.ReadLine())
+    let Tail = readList (n-1)
+    Head::Tail
+
+let readData () = 
+    let n=System.Convert.ToInt32(System.Console.ReadLine())
+    readList n
+
+// task 1.7
 let shiftRight list =
     match list with
     | [] -> []
@@ -37,7 +49,7 @@ let f19 list =
 
 [<EntryPoint>]
 let main argv = 
-    let l = [1; 2; 3; 4; 5]
+(*    let l = [1; 2; 3; 4; 5]
 
     let result_1_7 = shiftRight (shiftRight l)
     printfn "%A" result_1_7
@@ -46,16 +58,19 @@ let main argv =
     printfn "%A" result_1_17
 
     let result_1_27 = shiftLeft l
-    printfn "%A" result_1_27
+    printfn "%A" result_1_27*)
 
-    let list_1 = [1; 2; 3; 4; 5]
-    let list_2 = [3; 4; 7]
+    printfn "Введите первый список:"
+    let list_1 = readData()
+
+    printfn "Введите второй список:"
+    let list_2 = readData()
 
     let result_18_7 = f18 list_1 list_2
-    printfn "%A" result_18_7
+    printfn "Результат: %A" result_18_7
 
-    let list = "abba"
+(*    let list = "abba"
     let result_19_7 = f19 (Seq.toList list)
-    printfn "%A" result_19_7
+    printfn "%A" result_19_7*)
 
     0
