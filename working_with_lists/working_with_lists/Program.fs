@@ -1,5 +1,4 @@
 ﻿// task 1.7
-
 let shiftRight list =
     match list with
     | [] -> []
@@ -7,6 +6,8 @@ let shiftRight list =
         let last = List.last list
         last::(list |> List.take (List.length list - 1))
 
+
+// task 1.17
 let swapMinMax list =
     let minEl = List.min list
     let maxEl = List.max list
@@ -18,6 +19,11 @@ let swapMinMax list =
         | h::t -> h :: (swap t)
     swap list
 
+// task 1.27
+let shiftLeft list =
+    match list with
+    | [] -> []
+    | h::t -> t @ [h]
 
 
 [<EntryPoint>]
@@ -29,5 +35,8 @@ let main argv =
 
     let result_1_17 = swapMinMax l
     printfn "%A" result_1_17
+
+    let result_1_27 = shiftLeft l
+    printfn "%A" result_1_27
 
     0
