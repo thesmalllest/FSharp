@@ -4,7 +4,7 @@ let shiftRight list =
     | [] -> []
     | _ -> 
         let last = List.last list
-        last::(list |> List.take (List.length list - 1))
+        last::(List.take (List.length list - 1) list)
 
 
 // task 1.17
@@ -28,6 +28,13 @@ let shiftLeft list =
 // task 18.7
 let f18 list1 list2 = List.filter (fun x -> List.contains x list2) list1 
 
+// task 19.7
+let f19 list =
+    let r = List.rev list
+    match list = r with
+    | true -> "yes"
+    | false -> "no"
+
 [<EntryPoint>]
 let main argv = 
     let l = [1; 2; 3; 4; 5]
@@ -46,5 +53,9 @@ let main argv =
 
     let result_18_7 = f18 list_1 list_2
     printfn "%A" result_18_7
+
+    let list = "abba"
+    let result_19_7 = f19 (Seq.toList list)
+    printfn "%A" result_19_7
 
     0
