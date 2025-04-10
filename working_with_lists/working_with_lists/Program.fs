@@ -25,6 +25,8 @@ let shiftLeft list =
     | [] -> []
     | h::t -> t @ [h]
 
+// task 18.7
+let f18 list1 list2 = List.filter (fun x -> List.contains x list2) list1 
 
 [<EntryPoint>]
 let main argv = 
@@ -38,5 +40,11 @@ let main argv =
 
     let result_1_27 = shiftLeft l
     printfn "%A" result_1_27
+
+    let list_1 = [1; 2; 3; 4; 5]
+    let list_2 = [3; 4; 7]
+
+    let result_18_7 = f18 list_1 list_2
+    printfn "%A" result_18_7
 
     0
