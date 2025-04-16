@@ -1,4 +1,4 @@
-﻿[<AbstractClass>]
+﻿(*[<AbstractClass>]
 type GeometricFigure() =
     abstract member Area: unit -> float
     default this.Area() = 0.0
@@ -54,4 +54,24 @@ let main argv =
     (square :> IPrint).Print()
     (circle :> IPrint).Print()
 
-    0
+    0*)
+
+type Figure =
+    | Rectangle of width: float * height: float
+    | Square of side: float
+    | Circle of radius: float
+
+let area figure =
+    match figure with
+    | Rectangle (width, height) -> width * height
+    | Square side -> side * side
+    | Circle radius -> System.Math.PI * radius * radius
+
+let rectangle = Rectangle(3.0, 6.0)
+let square = Square(4.0)
+let circle = Circle(2.0)
+
+printfn "Площадь прямоугольника: %.2f" (area rectangle)
+printfn "Площадь квадрата: %.2f" (area square)
+printfn "Площадь круга: %.2f" (area circle)
+
