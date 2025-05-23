@@ -5,10 +5,39 @@ let rec gcd a b =
     | 0 -> a
     | _ -> gcd b (a % b)
 
+let isPrime n =
+    let rec check d =
+        match d with
+        | d when d * d > n -> true
+        | d when n % d = 0 -> false
+        | _ -> check (d + 1)
+    match n with
+    | n when n < 2 -> false
+    | _ -> check 2
+
+let getDivisors n =
+    let rec loop d acc =
+        match d > n with
+        | true -> acc
+        | false when n % d = 0 -> loop (d + 1) (d :: acc)
+        | false -> loop (d + 1) acc
+    loop 1 [] |> List.rev
+
+let getPrimeDivisors n =
+    getDivisors n
+    |> List.filter (fun d -> isPrime d)
+
+let rec multiply lst =
+    match lst with
+    | [] -> 1
+    | x :: xs -> x * multiply xs
+
+let rad n =
+    getPrimeDivisors n |> multiply
+
 [<EntryPoint>]
 let main argv = 
 
-    Console.WriteLine(gcd 5 27)
-    Console.WriteLine(gcd 3 27)
+    printfn "%A" (rad 4320)
 
     0
