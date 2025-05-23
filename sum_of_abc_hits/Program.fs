@@ -35,9 +35,13 @@ let rec multiply lst =
 let rad n =
     getPrimeDivisors n |> multiply
 
+let isCoprimeTriple (a, b, c) =
+    gcd a b = 1 && gcd a c = 1 && gcd b c = 1
+
 [<EntryPoint>]
 let main argv = 
 
     printfn "%A" (rad 4320)
+    printfn "%A" (isCoprimeTriple (32, 27, 5))
 
     0
