@@ -38,10 +38,15 @@ let rad n =
 let isCoprimeTriple (a, b, c) =
     gcd a b = 1 && gcd a c = 1 && gcd b c = 1
 
+let isAbcHit (a, b, c) =
+    a < b &&
+    a + b = c &&
+    isCoprimeTriple (a, b, c) &&
+    rad (a * b * c) < c
+
 [<EntryPoint>]
 let main argv = 
 
-    printfn "%A" (rad 4320)
-    printfn "%A" (isCoprimeTriple (32, 27, 5))
+    printfn "%A" (isAbcHit (5, 27, 32))
 
     0
