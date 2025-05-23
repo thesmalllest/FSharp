@@ -27,10 +27,12 @@ let getPrimeDivisors n =
     getDivisors n
     |> List.filter (fun d -> isPrime d)
 
-let rec multiply lst =
-    match lst with
-    | [] -> 1
-    | x :: xs -> x * multiply xs
+let multiply lst =
+    let rec loop lst acc =
+        match lst with
+        | [] -> acc
+        | x :: xs -> loop xs (acc * x)
+    loop lst 1
 
 let rad n =
     getPrimeDivisors n |> multiply
@@ -44,9 +46,21 @@ let isAbcHit (a, b, c) =
     isCoprimeTriple (a, b, c) &&
     rad (a * b * c) < c
 
+let abcHitsSum limit =
+    [|1 .. limit - 1|]
+    |> Array.collect (fun c ->
+        [|1 .. c / 2|]
+        |> Array.map (fun a ->
+            let b = c - a
+            (a, b, c)))
+    |> Array.filter isAbcHit
+    |> Array.map (fun (_, _, c) -> c)
+    |> Array.sum
+
 [<EntryPoint>]
 let main argv = 
 
-    printfn "%A" (isAbcHit (5, 27, 32))
+    let result = abcHitsSum 100
+    printfn "Сумма всех c (abc-hits < 100): %d" result
 
     0
