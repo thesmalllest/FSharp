@@ -47,15 +47,15 @@ let isAbcHit (a, b, c) =
     rad (a * b * c) < c
 
 let abcHitsSum limit =
-    [|1 .. limit - 1|]
-    |> Array.collect (fun c ->
-        [|1 .. c / 2|]
-        |> Array.map (fun a ->
+    [1 .. limit - 1]
+    |> List.collect (fun c ->
+        [1 .. c / 2]
+        |> List.map (fun a ->
             let b = c - a
             (a, b, c)))
-    |> Array.filter isAbcHit
-    |> Array.map (fun (_, _, c) -> c)
-    |> Array.sum
+    |> List.filter isAbcHit
+    |> List.map (fun (_, _, c) -> c)
+    |> List.sum
 
 [<EntryPoint>]
 let main argv = 
